@@ -1,0 +1,8 @@
+prefix=/home/enzo-inc/Desktop/3rd_Year/SDP/autonomous/catkin_ws/devel
+
+Name: sdp_pkg
+Description: Description of sdp_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
