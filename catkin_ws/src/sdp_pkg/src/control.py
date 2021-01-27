@@ -2,8 +2,6 @@
 
 import sys
 import rospy
-import numpy as np
-from sensor_msgs.msg import Image
 from sdp_pkg.msg import Control_msg
 
 
