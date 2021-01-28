@@ -1,8 +1,0 @@
-prefix=/home/enzo-inc/Desktop/3rd_Year/SDP/autonomous/catkin_ws/install
-
-Name: sdp_pkg
-Description: Description of sdp_pkg
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: roscpp rospy std_msgs message_runtime

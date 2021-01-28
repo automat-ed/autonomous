@@ -1,2 +1,0 @@
-sdp_pkg
--DCATKIN_DEVEL_PREFIX=/home/enzo-inc/Desktop/3rd_Year/SDP/autonomous/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/enzo-inc/Desktop/3rd_Year/SDP/autonomous/catkin_ws/install -G Unix Makefiles
