@@ -21,15 +21,17 @@ class Control:
 		# Once input data from other sensor nodes (camera, lidar, etc ...) will start to arrive
 		# the send_command() function will be positioned in appropriate callback functions 
 		# in response to the sensor input
-		while True:
-			self.send_command()		
+		rate = rospy.Rate(10)
+		while not rospy.is_shutdown():
+		    self.send_command()
+		    rate.sleep()	
 		
 
 	def send_command(self):	
 		msg = ControlStamped()
 		msg.control.speed = 0
 		msg.control.acceleration = 0
-		msg.control.angle = 0
+		msg.control.steering_angle = 0
 		self.control_pub.publish(msg)
 
 
@@ -38,10 +40,6 @@ class Control:
 
 def main(args):
 	controller = Control()
-	try:
-		rospy.spin()
-	except KeyboardInterrupt:
-		print('Shutting down')
 
 if __name__ == '__main__':
 	main(sys.argv)

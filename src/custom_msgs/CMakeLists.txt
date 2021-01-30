@@ -9,19 +9,17 @@ find_package(catkin REQUIRED COMPONENTS
 
 
 ## Generate messages in the 'msg' folder
- add_message_files(
+ add_message_files(DIRECTORY msg
    FILES
    Control.msg
    ControlStamped.msg
  )
+ 
+generate_messages(DEPENDENCIES std_msgs)
+
+catkin_package(CATKIN_DEPENDS message_runtime std_msgs)
 
 
-## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs  # Or other packages containing msgs
-   custom_msgs
- )
 
 
 

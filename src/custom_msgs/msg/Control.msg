@@ -2,4 +2,4 @@
 
 float32 speed
 float32 acceleration
-float32 angle
+float32 steering_angle
