@@ -1,0 +1,8 @@
+[submodule "src/simulation"]
+	path = src/simulation
+	url = https://github.com/automat-ed/simulation.git
+	branch = robot_model
+[submodule "src/basic_controller/simulation"]
+	path = src/basic_controller/simulation
+	url = https://github.com/automat-ed/simulation.git
+	branch = robot_model
