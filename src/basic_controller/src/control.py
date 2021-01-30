@@ -29,9 +29,9 @@ class Control:
 
 	def send_command(self):	
 		msg = ControlStamped()
-		msg.control.speed = 0.1
+		msg.control.speed = 5
 		msg.control.acceleration = 0
-		msg.control.steering_angle = 0.1
+		msg.control.steering_angle = 0.7
 		self.control_pub.publish(msg)
 
 
