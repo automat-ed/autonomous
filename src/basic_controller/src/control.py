@@ -8,7 +8,7 @@ from custom_msgs.msg import ControlStamped
 
 class Control:
 	def __init__(self):
-		rospy.init_node('control', anonymous=True)
+		rospy.init_node('basic_control')
 
 		# Subscribers
 		
