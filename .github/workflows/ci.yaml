@@ -6,7 +6,7 @@ jobs:
   catkin_build:
     name: Build workspace
     runs-on: ubuntu-20.04
-    container: noetic
+    container: ros:noetic
     steps:
       - uses: actions/checkout@v2
         with:
