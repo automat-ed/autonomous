@@ -8,12 +8,15 @@ jobs:
     runs-on: ubuntu-20.04
     container: ros:noetic
     steps:
-      - run: sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-      - run: sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-      - run: sudo apt update && sudo apt install -yq git python3-catkin-tools python3-pip
-      - run: sudo pip3 install -q catkin_pkg osrf_pycommon pyyaml setuptools sphinxcontrib-programoutput
-      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+        run: sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+        run: sudo apt update && sudo apt install -yq git python3-catkin-tools python3-pip
+        run: sudo pip3 install -q catkin_pkg osrf_pycommon pyyaml setuptools sphinxcontrib-programoutput
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
-      - run: . /opt/ros/noetic/setup.sh && catkin build
+      - name: Build workspace
+        run: . /opt/ros/noetic/setup.sh && catkin build
