@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <!-- start Webots -->
-    <arg name="no-gui" default="false," doc="Start Webots with minimal GUI"/>
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
     <include file="$(find simulation)/launch/webots.launch">
         <arg name="mode" value="realtime"/>
         <arg name="no-gui" value="$(arg no-gui)"/>

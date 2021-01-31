@@ -1,21 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import sys
 import rospy
 from custom_msgs.msg import ControlStamped
 
 
-
 class Control:
 	def __init__(self):
 		rospy.init_node('basic_control')
 
-		# Subscribers
-		
-
 		# Publishers
 		self.control_pub = rospy.Publisher('/cmd', ControlStamped, queue_size=10)
-
 
 		# The controller node now sends data indefinetely to the topic
 		# Once input data from other sensor nodes (camera, lidar, etc ...) will start to arrive
@@ -26,16 +21,12 @@ class Control:
 		    self.send_command()
 		    rate.sleep()	
 		
-
 	def send_command(self):	
 		msg = ControlStamped()
 		msg.control.speed = 5
 		msg.control.acceleration = 0
 		msg.control.steering_angle = 0.7
 		self.control_pub.publish(msg)
-
-
-
 
 
 def main(args):
