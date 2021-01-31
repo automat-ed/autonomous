@@ -1,0 +1,13 @@
+name: Continuous Integration
+
+on: [pull_request]
+
+jobs:
+  catkin_build:
+    name: Build workspace
+    container: noetic
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - run: catkin build
