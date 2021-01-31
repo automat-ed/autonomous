@@ -1,0 +1,3 @@
+[submodule "src/simulation"]
+	path = src/simulation
+	url = git@github.com:automat-ed/simulation.git
