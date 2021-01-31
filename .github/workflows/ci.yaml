@@ -18,5 +18,7 @@ jobs:
       - run: ls
       - run: ls /
       - run: ls /opt
-      - run: ls
+      - run: ls /opt/ros
+      - run: ls /opt/ros/noetic
+      - run: . /opt/ros/noetic/setup.sh
       - run: catkin_make
