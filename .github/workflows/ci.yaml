@@ -16,9 +16,4 @@ jobs:
         with:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
-      - run: ls
-      - run: ls /
-      - run: ls /opt
-      - run: ls /opt/ros
-      - run: ls /opt/ros/noetic
       - run: . /opt/ros/noetic/setup.sh && catkin build
