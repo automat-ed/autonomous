@@ -8,9 +8,18 @@ jobs:
     runs-on: ubuntu-20.04
     container: ros:noetic
     steps:
-      - run: sudo apt update -yq && sudo apt install git -yq
+      - run: sudo apt update -yq && \
+          sudo apt install -yq \
+          git \
+          cmake \
+          python-catkin-pkg \
+          python-empy \
+          python-nose \
+          libgtest-dev \
+          ros-noetic-catkin
       - uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
+      - run:
       - run: catkin_make
