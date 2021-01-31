@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
       - run: sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-      - run: sudo apt update && sudo apt install -yq cmake git python3-catkin-tools ros-noetic-catkin python3-pip python3-catkin-pkg
+      - run: sudo apt update && sudo apt install -yq git python3-catkin-tools python3-pip
       - run: sudo pip3 install -q catkin_pkg osrf_pycommon pyyaml setuptools sphinxcontrib-programoutput
       - uses: actions/checkout@v2
         with:
@@ -21,5 +21,4 @@ jobs:
       - run: ls /opt
       - run: ls /opt/ros
       - run: ls /opt/ros/noetic
-      - run: . /opt/ros/noetic/setup.sh
-      - run: catkin build
+      - run: . /opt/ros/noetic/setup.sh && catkin build
