@@ -13,4 +13,4 @@ jobs:
         with:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
-      - run: catkin build
+      - run: catkin_make
