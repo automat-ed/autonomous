@@ -16,7 +16,7 @@ jobs:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
       - name: Run catkin_lint
-        run: catkin_lint src
+        run: . /opt/ros/noetic/setup.sh && catkin_lint src
 
   catkin_build:
     name: Build workspace
