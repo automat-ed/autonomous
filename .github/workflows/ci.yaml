@@ -3,6 +3,16 @@ name: Continuous Integration
 on: [pull_request]
 
 jobs:
+  catkin_lint:
+    name: Catkin lint
+    runs-on: ubuntu-20.04
+    container: ros:noetic
+    steps:
+      - name: Install catkin_lint
+        run: sudo apt update && sudo apt install -yq catkin-lint
+      - name: Run catkin_lint
+        run: catkin_lint src
+
   catkin_build:
     name: Build workspace
     runs-on: ubuntu-20.04
