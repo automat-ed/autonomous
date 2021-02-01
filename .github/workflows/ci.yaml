@@ -33,3 +33,18 @@ jobs:
           submodules: recursive
       - name: Build workspace
         run: . /opt/ros/noetic/setup.sh && catkin build
+
+  quality_check:
+    name: Code Quality
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8.x"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install flake8 and plugins
+        run: pip3 install flake8 pep8-naming
+      - name: Run flake8
+        run: flake8 src/
