@@ -12,9 +12,6 @@ jobs:
         run: sudo apt update && sudo apt install -yq git catkin-lint
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
-          submodules: recursive
       - name: Run catkin_lint
         run: . /opt/ros/noetic/setup.sh && catkin_lint --config ./.catkin_lint src
 
