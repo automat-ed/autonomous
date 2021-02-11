@@ -1,0 +1,52 @@
+name: Continuous Integration
+
+on: [pull_request]
+
+jobs:
+  catkin_lint:
+    name: Catkin lint
+    runs-on: ubuntu-20.04
+    container: ros:noetic
+    steps:
+      - name: Install catkin_lint (and dependencies)
+        run: sudo apt update && sudo apt install -yq git catkin-lint
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run catkin_lint
+        run: . /opt/ros/noetic/setup.sh && catkin_lint --config ./.catkin_lint src
+
+  catkin_build:
+    name: Build workspace
+    runs-on: ubuntu-20.04
+    container: ros:noetic
+    steps:
+      - name: Set up sources.list
+        run: sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+      - name: Set up keys
+        run: sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+      - name: Install system dependencies
+        run: sudo apt update && sudo apt install -yq git python3-catkin-tools python3-pip
+      - name: Install Python dependencies
+        run: sudo pip3 install -q catkin_pkg osrf_pycommon pyyaml setuptools sphinxcontrib-programoutput
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
+          submodules: recursive
+      - name: Build workspace
+        run: . /opt/ros/noetic/setup.sh && catkin build
+
+  quality_check:
+    name: Code Quality
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8.x"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install flake8 and plugins
+        run: pip3 install flake8 pep8-naming
+      - name: Run flake8
+        run: flake8 src/
