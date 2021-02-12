@@ -6,7 +6,7 @@
         <arg name="mode" value="realtime"/>
         <arg name="no-gui" value="$(arg no-gui)"/>
         <!-- modify with path to world-->
-        <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
+        <arg name="world" value="$(find simulation)/worlds/demo1.wbt"/>
     </include>
 
     <arg name="auto-close" default="false" doc="Startup mode"/>

@@ -25,7 +25,7 @@ class Control:
         msg = ControlStamped()
         msg.control.speed = 5
         msg.control.acceleration = 0
-        msg.control.steering_angle = 0.7
+        msg.control.steering_angle = 0
         self.control_pub.publish(msg)
 
 
