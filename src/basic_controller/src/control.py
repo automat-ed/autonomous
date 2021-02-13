@@ -2,14 +2,14 @@
 
 import sys
 import os
-import rospy
-from rospy.numpy_msg import numpy_msg
-from custom_msgs.msg import ControlStamped
-from sensor_msgs.msg import Image
-import cv2
-from cv_bridge import CvBridge, CvBridgeError
+
 import numpy as np
-from std_msgs.msg import String
+import cv2
+from cv_bridge import CvBridge
+
+import rospy
+from sensor_msgs.msg import Image
+from custom_msgs.msg import ControlStamped
 
 
 file_dir = os.path.dirname(__file__)
@@ -49,10 +49,9 @@ class Control:
 
     def detect_path(self, data):
         cv_image = self.bridge.imgmsg_to_cv2(data)
+        path_detected_image = path_detection.detect_path(cv_image)
 
-        cv2.imshow('window', cv_image)
-        cv2.waitKey(3)
-
+        
 def main(args):
     _ = Control()
 
