@@ -48,8 +48,7 @@ class Control:
 
 
     def detect_path(self, data):
-        cv_image = self.bridge.imgmsg_to_cv2(data, '64FC3')
-        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_64FC32BGR)
+        cv_image = self.bridge.imgmsg_to_cv2(data)
 
         cv2.imshow('window', cv_image)
         cv2.waitKey(3)
