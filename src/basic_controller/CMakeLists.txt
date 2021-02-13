@@ -5,9 +5,11 @@ find_package(catkin REQUIRED
     COMPONENTS
     rospy
     custom_msgs
+    sensor_msgs
+    std_msgs
 )
 
-catkin_package(CATKIN_DEPENDS rospy custom_msgs)
+catkin_package(CATKIN_DEPENDS rospy custom_msgs sensor_msgs std_msgs)
 
 catkin_install_python(PROGRAMS src/control.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
