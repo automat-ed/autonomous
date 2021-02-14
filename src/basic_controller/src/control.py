@@ -24,7 +24,7 @@ class Control:
         self.bridge = CvBridge()
 
         # Subscribers
-        self.camera_sub = rospy.Subscriber('/camera', Image, self.detect_path, queue_size=10)
+        #self.camera_sub = rospy.Subscriber('/camera', Image, self.detect_path, queue_size=10)
 
         # Publishers
         self.control_pub = rospy.Publisher('/cmd', ControlStamped, queue_size=10)
@@ -47,9 +47,9 @@ class Control:
         self.control_pub.publish(msg)
 
 
-    def detect_path(self, data):
-        cv_image = self.bridge.imgmsg_to_cv2(data)
-        path_detected_image = path_detection.detect_path(cv_image)
+    # def detect_path(self, data):
+    #     cv_image = self.bridge.imgmsg_to_cv2(data)
+    #     path_detected_image = path_detection.detect_path(cv_image)
 
         
 def main(args):
