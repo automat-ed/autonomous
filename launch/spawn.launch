@@ -10,5 +10,5 @@
     </include>
 
     <arg name="auto-close" default="false" doc="Startup mode"/>
-    <node name='controller' pkg='basic_controller' type='control.py' required='$(arg auto-close)'/>
+    <node name='controller' pkg='simulation' type='full_controller' required='$(arg auto-close)'/>
 </launch>
