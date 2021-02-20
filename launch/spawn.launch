@@ -9,6 +9,5 @@
         <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
     </include>
 
-    <arg name="auto-close" default="false" doc="Startup mode"/>
-    <node name='controller' pkg='simulation' type='full_controller' required='$(arg auto-close)'/>
+    <node name='controller' pkg='simulation' type='full_controller' output='screen' respawn='true'/>
 </launch>
