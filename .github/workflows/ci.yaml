@@ -31,6 +31,7 @@ jobs:
           sudo pip3 install -q catkin_pkg osrf_pycommon pyyaml setuptools sphinxcontrib-programoutput
       - name: Install webots
         run: |
+          sudo apt update && sudo apt install -yq wget
           wget -qO- https://cyberbotics.com/Cyberbotics.asc | sudo apt-key add -
           sudo apt-add-repository 'deb https://cyberbotics.com/debian/ binary-amd64/'
           sudo apt-get update
