@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Start Webots -->
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <include file="$(find simulation)/launch/webots.launch">
+        <arg name="mode" value="realtime"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <!-- modify with path to world-->
+        <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
+    </include>
+
+    <!-- External Webots Robot Controller -->
+    <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'/>
+</launch>
