@@ -46,12 +46,16 @@ void KeyboardReader::shutdown() { tcsetattr(kfd, TCSANOW, &cooked); }
 //  Keyboard Controller  //
 ///////////////////////////
 
-KeyboardController::KeyboardController() : linear_(0), angular_(0) {
-  // ROS Parameters
-  nh_.param("avel_scale", a_scale_, 0.3);
-  nh_.param("lvel_scale", l_scale_, 0.3);
+KeyboardController::KeyboardController(ros::NodeHandle *nh)
+    : linear_(0), angular_(0) {
+  // ROS Node Handle
+  nh_ = nh;
 
-  cmd_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+  // ROS Parameters
+  nh_->param("avel_scale", a_scale_, 0.3);
+  nh_->param("lvel_scale", l_scale_, 0.3);
+
+  cmd_pub_ = nh_->advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 }
 
 KeyboardController::~KeyboardController() { input.shutdown(); }
@@ -133,7 +137,9 @@ void quit(int sig) {
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "keyboard_controller");
-  KeyboardController controller;
+  ros::NodeHandle nh("~");
+
+  KeyboardController controller(&nh);
 
   // Handle the SIGINT signal
   signal(SIGINT, quit);

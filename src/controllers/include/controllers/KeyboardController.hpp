@@ -22,13 +22,13 @@ private:
 
 class KeyboardController {
 public:
-  KeyboardController();
+  KeyboardController(ros::NodeHandle *nh);
   ~KeyboardController();
   void keyLoop();
 
 private:
   // ROS Handler
-  ros::NodeHandle nh_;
+  ros::NodeHandle *nh_;
 
   // Scale values
   double l_scale_;
