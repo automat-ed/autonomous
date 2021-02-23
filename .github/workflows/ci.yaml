@@ -35,7 +35,8 @@ jobs:
           wget -qO- https://cyberbotics.com/Cyberbotics.asc | sudo apt-key add -
           sudo apt-add-repository 'deb https://cyberbotics.com/debian/ binary-amd64/'
           sudo apt-get update
-          DEBIAN_FRONTEND=noninteractive sudo apt-get -yq install webots
+          DEBIAN_FRONTEND=noninteractive apt-get -yq install keyboard-configuration
+          sudo apt-get -yq install webots
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
