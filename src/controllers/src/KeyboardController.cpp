@@ -14,6 +14,7 @@
 #define KEY_RIGHT 0x43
 #define KEY_LEFT 0x44
 #define KEY_Q 0x71
+#define KEY_S 0x73
 
 ///////////////////////
 //  Keyboard Reader  //
@@ -98,21 +99,23 @@ void KeyboardController::keyLoop() {
       angular_ = 1.0;
       dirty = true;
       break;
+    case KEY_S:
+      ROS_DEBUG("Stop");
+      dirty = true;
+      break;
     case KEY_Q:
       ROS_DEBUG("Quit");
       return;
     }
 
-    // Create control message
-    geometry_msgs::Twist msg;
-    msg.angular.z = a_scale_ * angular_;
-    msg.linear.x = l_scale_ * linear_;
-    cmd_pub_.publish(msg);
-
-    // if (dirty == true) {
-    //   cmd_pub_.publish(msg);
-    //   dirty = false;
-    // }
+    if (dirty == true) {
+      // Create control message
+      geometry_msgs::Twist msg;
+      msg.angular.z = a_scale_ * angular_;
+      msg.linear.x = l_scale_ * linear_;
+      cmd_pub_.publish(msg);
+      dirty = false;
+    }
   }
 
   return;
