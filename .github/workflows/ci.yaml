@@ -33,6 +33,8 @@ jobs:
         with:
           ssh-key: ${{ secrets.CI_SSH_PRIVATE }}
           submodules: recursive
+      - name: Install ROS packages
+        run: sudo rosdep install --from-paths src --ignore-src -r -y
       - name: Build workspace
         run: . /opt/ros/noetic/setup.sh && catkin build
 
