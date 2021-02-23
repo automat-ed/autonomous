@@ -13,6 +13,13 @@
     <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'/>
 
     <!-- Keyboard Controller -->
-    <node name="keyboard_controller" pkg="controllers" type="keyboard_controller" output="screen" />
-
+    <arg name="use_python" default="true"/>
+    <node if="$(arg use_python)" name="keyboard_controller" pkg="controllers" type="KeyboardController.py" output="screen">
+        <param name="avel_scale" value="0.3"/>
+        <param name="lvel_scale" value="0.3"/>
+    </node>
+    <node unless="$(arg use_python)" name="keyboard_controller" pkg="controllers" type="keyboard_controller" output="screen">
+        <param name="avel_scale" value="0.3"/>
+        <param name="lvel_scale" value="0.3"/>
+    </node>
 </launch>
