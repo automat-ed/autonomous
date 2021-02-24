@@ -1,0 +1,28 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.9963399482251879 -0.07803630238976755 -0.0348861445270551 5.439653260110835
+  position 1.6286652251558507 26.573417018852346 24.667089378883627
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RoadIntersection {
+  translation 0 0.1 0
+  startRoadsStartLine []
+  startRoadsLine [
+    RoadLine {
+      color 0 0 0
+    }
+  ]
+  locked FALSE
+}
+Floor {
+  size 30 30
+  appearance Parquetry {
+    type "light strip"
+  }
+}
