@@ -26,13 +26,14 @@ imu0_config: [false, false, false,
  false, false, false,]
 imu0_differential: false
 
-imu1: /controller/accelerometer/pub_topic
-imu1_config: [false, false, false,
- false, false, false,
- false,  false,  false,
- false, false, false,
- true, true, false,]
-imu1_differential: false
+# imu1: /controller/accelerometer/pub_topic
+# imu1_config: [false, false, false,
+#  false, false, false,
+#  false,  false,  false,
+#  false, false, false,
+#  true, true, false,]
+# imu1_differential: false
+
 
 imu2: /controller/imu/quaternion
 imu2_config: [false, false, false,
