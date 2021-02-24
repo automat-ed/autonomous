@@ -1,0 +1,5 @@
+<!-- Provide costmap to robot_localization-->
+<launch>
+    <arg name="map_file" default="$(env AUTOMATED_HOME)/worlds/world.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+</launch>
