@@ -48,6 +48,8 @@ void KeyboardReader::shutdown() { tcsetattr(kfd, TCSANOW, &cooked); }
 
 KeyboardController::KeyboardController(ros::NodeHandle *nh)
     : linear_(0), angular_(0) {
+  ROS_INFO("Starting C++ Keyboard Controller...");
+
   // ROS Node Handle
   nh_ = nh;
 
