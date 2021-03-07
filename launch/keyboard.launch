@@ -49,10 +49,12 @@
     <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local">
         <rosparam command="load" file="config/ekf_local.yaml"/>
+        <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
     </node>
 
     <!-- EKF Global node, which incorporates discrete GPS data -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global">
         <rosparam command="load" file="config/ekf_global.yaml"/>
+        <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
     </node>
 </launch>

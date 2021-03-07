@@ -8,7 +8,7 @@
     <param name="zero_altitude" value="true"/>
     
     
-    <param name="broadcast_utm_transform" value="false"/>
+    <param name="broadcast_cartesian_transform" value="false"/>
     <param name="publish_filtered_gps" value="false"/>
 
     
@@ -16,10 +16,10 @@
     <param name="wait_for_datum" value="false"/>
     
 
-    <remap from="/imu/data" to="/controller/imu/quaternion" />
-    <remap from="/gps/fix" to="/controller/gps/coordinates" />
-    <!-- The odometry is derived from another instance of ekf_localization -->
-    <remap from="/odometry/filtered" to="/odometry/filtered" />
+    <remap from="/imu/data" to="/imu/ground_truth"/>
+    <remap from="/gps/fix" to="/gps/ground_truth/coordinates"/>
+    <!-- The odometry is derived from ekf_localization global -->
+    <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 
   </node>
 
