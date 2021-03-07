@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Start Webots -->
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <include file="$(find simulation)/launch/webots.launch">
+        <arg name="mode" value="realtime"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <!-- modify with path to world-->
+        <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
+    </include>
+
+    <arg name="controller_type" default="0"/>
+    <group if="$(eval arg('controller_type') == 0)">
+        <!-- External Webots Robot Controller -->
+        <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'>
+            <param name="use_keyboard_control" value="true" />
+        </node>
+    </group>
+
+    <group if="$(eval arg('controller_type') == 1)">
+        <!-- External Webots Robot Controller -->
+        <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'/>
+
+        <!-- C++ Keyboard Control -->
+        <node name="keyboard_controller" pkg="controllers" type="keyboard_controller" output="screen">
+            <param name="avel_scale" value="0.3"/>
+            <param name="lvel_scale" value="0.3"/>
+        </node>
+    </group>
+
+    <group if="$(eval arg('controller_type') == 2)">
+        <!-- External Webots Robot Controller -->
+        <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'/>
+
+        <!-- Python Keyboard Control -->
+        <node if="$(eval arg('controller_type') == 2)" name="keyboard_controller" pkg="controllers" type="KeyboardController.py" output="screen">
+            <param name="avel_scale" value="0.3"/>
+            <param name="lvel_scale" value="0.3"/>
+        </node>
+    </group>
+
+    <!-- Localization -->
+    <!-- Map server providing costmap-->
+    <include file="launch/start_map_server.launch" />
+
+    <!-- Convert GPS data into Odometry data -->
+    <include file="launch/start_navsat.launch" />
+
+    <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local">
+        <rosparam command="load" file="config/ekf_local.yaml"/>
+    </node>
+
+    <!-- EKF Global node, which incorporates discrete GPS data -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global">
+        <rosparam command="load" file="config/ekf_global.yaml"/>
+    </node>
+</launch>
