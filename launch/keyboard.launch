@@ -2,11 +2,12 @@
 <launch>
     <!-- Start Webots -->
     <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch" />
     <include file="$(find simulation)/launch/webots.launch">
-        <arg name="mode" value="realtime"/>
+        <arg name="mode" value="pause"/>
         <arg name="no-gui" value="$(arg no-gui)"/>
         <!-- modify with path to world-->
-        <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
+        <arg name="world" value="$(find simulation)/worlds/$(arg world).wbt"/>
     </include>
 
     <arg name="controller_type" default="0"/>
