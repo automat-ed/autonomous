@@ -2,20 +2,12 @@
 <launch>
     <!-- Start Webots -->
     <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
-<<<<<<< HEAD
-    <include file="$(find simulation)/launch/webots.launch">
-        <arg name="mode" value="realtime"/>
-        <arg name="no-gui" value="$(arg no-gui)"/>
-        <!-- modify with path to world-->
-        <arg name="world" value="$(find simulation)/worlds/world.wbt"/>
-=======
     <arg name="world" default="square" doc="The name of the webots world to launch" />
     <include file="$(find simulation)/launch/webots.launch">
         <arg name="mode" value="pause"/>
         <arg name="no-gui" value="$(arg no-gui)"/>
         <!-- modify with path to world-->
         <arg name="world" value="$(find simulation)/worlds/$(arg world).wbt"/>
->>>>>>> main
     </include>
 
     <arg name="controller_type" default="0"/>
@@ -47,7 +39,6 @@
             <param name="lvel_scale" value="0.3"/>
         </node>
     </group>
-<<<<<<< HEAD
 
     <!-- Localization -->
     <!-- Map server providing costmap-->
@@ -68,8 +59,3 @@
         <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
     </node>
 </launch>
-=======
-</launch>
-
-
->>>>>>> main
