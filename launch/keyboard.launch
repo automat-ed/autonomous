@@ -41,8 +41,6 @@
     </group>
 
     <!-- Localization -->
-    <!-- Map server providing costmap-->
-    <include file="launch/start_map_server.launch" />
 
     <!-- Convert GPS data into Odometry data -->
     <include file="launch/start_navsat.launch" />
