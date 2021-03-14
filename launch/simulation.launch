@@ -40,7 +40,6 @@
 
             <remap from="/imu/data" to="/imu/ground_truth"/>
             <remap from="/gps/fix" to="/gps/ground_truth/coordinates"/>
-            <!-- The odometry is derived from ekf_localization global -->
             <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
         </node>
 
