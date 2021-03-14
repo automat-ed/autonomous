@@ -5,10 +5,12 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /LaserScan1
+        - /LaserScan1/Status1
         - /EKF odom1/Covariance1/Position1
         - /EKF odom1/Covariance1/Orientation1
-        - /Map1
-      Splitter Ratio: 0.5
+        - /Lidar1
+      Splitter Ratio: 0.4393305480480194
     Tree Height: 651
   - Class: rviz/Selection
     Name: Selection
@@ -28,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -40,7 +42,7 @@ Visualization Manager:
       Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
-      Enabled: false
+      Enabled: true
       Line Style:
         Line Width: 0.029999999329447746
         Value: Lines
@@ -53,7 +55,7 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
-      Value: false
+      Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: map
@@ -68,12 +70,12 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Local CostMap
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: costmap
@@ -84,23 +86,6 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
-    - Alpha: 1
-      Arrow Length: 0.30000001192092896
-      Axes Length: 0.30000001192092896
-      Axes Radius: 0.009999999776482582
-      Class: rviz/PoseArray
-      Color: 255; 25; 0
-      Enabled: false
-      Head Length: 0.07000000029802322
-      Head Radius: 0.029999999329447746
-      Name: Particle Cloud
-      Queue Size: 10
-      Shaft Length: 0.23000000417232513
-      Shaft Radius: 0.009999999776482582
-      Shape: Arrow (Flat)
-      Topic: /particlecloud
-      Unreliable: false
-      Value: false
     - Alpha: 1
       Class: rviz/Polygon
       Color: 255; 25; 0
@@ -117,17 +102,17 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: intensity
+      Channel Name: x
       Class: rviz/LaserScan
       Color: 255; 255; 255
       Color Transformer: Intensity
-      Decay Time: 20
-      Enabled: false
+      Decay Time: 0
+      Enabled: true
       Invert Rainbow: false
-      Max Color: 238; 238; 236
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
+      Max Color: 255; 25; 0
+      Max Intensity: 0.9973821043968201
+      Min Color: 78; 154; 6
+      Min Intensity: 0.9822948575019836
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -138,8 +123,8 @@ Visualization Manager:
       Topic: /lidar/ground_truth
       Unreliable: false
       Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
+      Use rainbow: false
+      Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
@@ -280,7 +265,7 @@ Visualization Manager:
           Scale: 1
           Value: true
         Value: true
-      Enabled: true
+      Enabled: false
       Keep: 1
       Name: IMU odom
       Position Tolerance: 0.10000000149011612
@@ -297,7 +282,7 @@ Visualization Manager:
         Value: Arrow
       Topic: /imu/odom
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Class: rviz/Axes
       Enabled: false
@@ -313,6 +298,14 @@ Visualization Manager:
       Name: Map
       Radius: 0.10000000149011612
       Reference Frame: map
+      Value: false
+    - Alpha: 1
+      Class: rviz/Axes
+      Enabled: false
+      Length: 1
+      Name: Lidar
+      Radius: 0.10000000149011612
+      Reference Frame: lidar
       Value: false
   Enabled: true
   Global Options:
@@ -342,7 +335,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 8.717879295349121
+      Distance: 15.216458320617676
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -358,9 +351,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5647963285446167
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
-      Yaw: 4.718585014343262
+      Yaw: 4.70859432220459
     Saved: ~
 Window Geometry:
   Displays:
@@ -378,5 +371,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1359
-  X: 116
-  Y: 38
+  X: 1969
+  Y: 73
