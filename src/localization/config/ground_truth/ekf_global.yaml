@@ -13,6 +13,9 @@ publish_tf: true
 # Future-data transform generated for compatibility with navsat_transform
 transform_time_offset: 0.0
 
+# Whether the state estimation node will publish diagnostic messages to the /diagnostics topic
+print_diagnostics: true
+
 # Frame settings
 map_frame: map 
 odom_frame: odom
@@ -22,7 +25,7 @@ world_frame: map
 twist0: /wheel_odom/ground_truth
 twist0_config: [false, false, false, # position
                 false, false, false, # orientation
-                true , true, false, # linear velocity
+                true , true , false, # linear velocity
                 false, false, false, # angular velocity
                 false, false, false] # linear acceleration
 twist0_differential: false
