@@ -34,7 +34,7 @@ class PortalConnection():
 
         @self.sio.event
         def connect_error(e):
-            rospy.logerr(e)
+            rospy.logerr(e['message'])
 
         @self.sio.event
         def disconnect():
@@ -42,7 +42,10 @@ class PortalConnection():
             self.connected = False
 
         # Connect to Portal
-        self.sio.connect(self.portal_uri, headers={"secret": self.secret})
+        try:
+            self.sio.connect(self.portal_uri, headers={"secret": self.secret})
+        except socketio.exceptions.ConnectionError:
+            return
 
         # Keep running until ROS is shut down
         while not rospy.is_shutdown():
