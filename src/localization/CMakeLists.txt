@@ -40,8 +40,10 @@ catkin_package(
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  config/ekf_global.yaml
-  config/ekf_local.yaml
+  config/ground_truth/ekf_global.yaml
+  config/ground_truth/ekf_local.yaml
+  config/noise/ekf_global.yaml
+  config/noise/ekf_local.yaml
   config/navsat.yaml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
