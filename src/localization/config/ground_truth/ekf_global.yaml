@@ -11,7 +11,8 @@ two_d_mode: true
 publish_tf: true
 
 # Future-data transform generated for compatibility with navsat_transform
-transform_time_offset: 0.0
+transform_time_offset: 0.05
+predict_to_current_time: true
 
 # Whether the state estimation node will publish diagnostic messages to the /diagnostics topic
 print_diagnostics: true
@@ -54,7 +55,7 @@ imu1_config: [false, false, false, # position
               false, false, false, # orientation
               false, false, false, # linear velocity
               false, false, false, # angular velocity
-              true , true, false] # linear acceleration
+              true , true , false] # linear acceleration
 imu1_differential: false
 imu1_queue_size: 2
 
