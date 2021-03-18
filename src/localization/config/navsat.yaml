@@ -13,7 +13,7 @@ broadcast_cartesian_transform_as_parent_frame: false
 
 # If this is true, all received odometry data is converted back to a lat/lon
 # and published as a NavSatFix message as /gps/filtered.
-publish_filtered_gps: false
+publish_filtered_gps: true
 
 # If this is true, the node ignores the IMU data and gets its heading from the
 # odometry source (typically the /odometry/filtered topic coming from one of
