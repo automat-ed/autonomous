@@ -7,9 +7,9 @@ from geometry_msgs.msg import Twist
 
 class KeyboardController:
     def __init__(self):
-        rospy.loginfo("Starting Python Keyboard Controller...")
-
         rospy.init_node('keyboard_controller')
+
+        rospy.loginfo("Starting Python Keyboard Controller...")
 
         # ROS Publisher
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)

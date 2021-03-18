@@ -1,0 +1,69 @@
+# The Global EKF node does only incorporates the output
+# of the Local EKF node with discrete GPS data
+
+# The frequency, in Hz, at which the filter will output a position estimate.
+frequency: 30
+
+# If this parameter is set to true, no 3D information will be used in your state estimate.
+two_d_mode: true
+
+# Whether to broadcast the transformation over the /tf topic. Defaults to true if unspecified.
+publish_tf: true
+
+# Future-data transform generated for compatibility with navsat_transform
+transform_time_offset: 0.05
+predict_to_current_time: true
+
+# Whether the state estimation node will publish diagnostic messages to the /diagnostics topic
+print_diagnostics: true
+
+# Frame settings
+map_frame: map 
+odom_frame: odom
+base_link_frame: base_link
+world_frame: map
+
+twist0: /wheel_odom/ground_truth
+twist0_config: [false, false, false, # position
+                false, false, false, # orientation
+                true , true , false, # linear velocity
+                false, false, false, # angular velocity
+                false, false, false] # linear acceleration
+twist0_differential: false
+twist0_queue_size: 2
+
+# GPS NavSat transformed to Odometry by navsat_transform
+odom0: /odometry/gps
+odom0_config: [true , true , false, # position
+               false, false, false, # orientation
+               false, false, false, # linear velocity
+               false, false, false, # angular velocity
+               false, false, false] # linear acceleration
+odom0_differential: false
+
+imu0: /gyro/ground_truth
+imu0_config: [false, false, false, # position
+              false, false, false, # orientation
+              false, false, false, # linear velocity
+              false, false, true , # angular velocity
+              false, false, false] # linear acceleration
+imu0_differential: false
+imu0_queue_size: 2
+
+imu1: /accelerometer/ground_truth
+imu1_config: [false, false, false, # position
+              false, false, false, # orientation
+              false, false, false, # linear velocity
+              false, false, false, # angular velocity
+              true , true , false] # linear acceleration
+imu1_differential: false
+imu1_queue_size: 2
+
+imu2: /imu/ground_truth
+imu2_config: [false, false, false, # position
+              false, false, true , # orientation
+              false, false, false, # linear velocity
+              false, false, false, # angular velocity
+              false, false, false] # linear acceleration
+imu2_differential: false
+imu2_queue_size: 2
