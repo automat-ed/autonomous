@@ -11,9 +11,10 @@
     </include>
 
     <!-- External Webots Controller -->
-    <arg name="keyboard" default="0"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use" />
     <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'>
         <param name="use_keyboard_control" value="$(eval arg('keyboard') == 0)" />
+        <param name="keyboard/lvel_scale" value="1" />
     </node>
 
     <!-- External Keyboard Controllers -->
@@ -28,34 +29,6 @@
         <node if="$(eval arg('keyboard') == 2)" name="keyboard_controller" pkg="controllers" type="KeyboardController.py" output="screen">
             <param name="avel_scale" value="0.3"/>
             <param name="lvel_scale" value="0.3"/>
-        </node>
-    </group>
-
-    <!-- Localization -->
-    <arg name="localization" default="true" />
-    <group if="$(eval arg('localization'))">
-        <!-- Convert GPS data into Odometry data -->
-        <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
-            <rosparam command="load" file="$(find localization)/config/navsat.yaml"/>
-
-            <remap from="/imu/data" to="/imu/ground_truth"/>
-            <remap from="/gps/fix" to="/gps/ground_truth/coordinates"/>
-            <!-- The odometry is derived from ekf_localization global -->
-            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
-        </node>
-
-        <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
-        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" output="screen">
-            <rosparam command="load" file="$(find localization)/config/ekf_local.yaml"/>
-
-            <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
-        </node>
-
-        <!-- EKF Global node, which incorporates discrete GPS data -->
-        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" output="screen">
-            <rosparam command="load" file="$(find localization)/config/ekf_global.yaml"/>
-
-            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
         </node>
     </group>
 </launch>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Simulation -->
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
+    <include file="$(env AUTOMATED_HOME)/launch/simulation.launch">
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
+    </include>
+
+    <!-- RViz -->
+    <arg name="rviz_config" default=""/>
+    <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
+
+    <!-- Ground Truth Localization -->
+    <arg name="ground_truth" default="false"/>
+    <group if="$(eval arg('ground_truth'))">
+        <!-- Convert GPS data into Odometry data -->
+        <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
+            <rosparam command="load" file="$(find localization)/config/navsat.yaml"/>
+
+            <remap from="/imu/data" to="/imu/ground_truth"/>
+            <remap from="/gps/fix" to="/gps/ground_truth/coordinates"/>
+            <!-- Should be from global ekf estimate for some reason -->
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+
+        <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" output="screen">
+            <rosparam command="load" file="$(find localization)/config/ground_truth/ekf_local.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
+        </node>
+
+        <!-- EKF Global node, which incorporates discrete GPS data -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" output="screen">
+            <rosparam command="load" file="$(find localization)/config/ground_truth/ekf_global.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+    </group>
+
+    <!-- Localiation (with noise) -->
+    <group unless="$(eval arg('ground_truth'))">
+        <!-- Convert GPS data into Odometry data -->
+        <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
+            <rosparam command="load" file="$(find localization)/config/navsat.yaml"/>
+
+            <remap from="/imu/data" to="/imu/data"/>
+            <remap from="/gps/fix" to="/gps/coordinates"/>
+            <!-- Should be from global ekf estimate for some reason -->
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+
+        <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" output="screen">
+            <rosparam command="load" file="$(find localization)/config/noise/ekf_local.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
+        </node>
+
+        <!-- EKF Global node, which incorporates discrete GPS data -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" output="screen">
+            <rosparam command="load" file="$(find localization)/config/noise/ekf_global.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+    </group>
+</launch>

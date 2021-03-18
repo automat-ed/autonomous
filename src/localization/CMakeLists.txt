@@ -1,17 +1,11 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(localization)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
-
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-#   message_filters
-#   rospy
-#   nav_msgs
-#   sensor_msgs
+  robot_localization
 )
 
 ###################################
@@ -26,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES localization
-#  CATKIN_DEPENDS message_filters rospy nav_msgs sensor_msgs
+   CATKIN_DEPENDS robot_localization
 #  DEPENDS system_lib
 )
 
@@ -46,8 +40,10 @@ catkin_package(
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  config/ekf_global.yaml
-  config/ekf_local.yaml
+  config/ground_truth/ekf_global.yaml
+  config/ground_truth/ekf_local.yaml
+  config/noise/ekf_global.yaml
+  config/noise/ekf_local.yaml
   config/navsat.yaml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
