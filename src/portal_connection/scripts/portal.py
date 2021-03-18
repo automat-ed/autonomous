@@ -2,6 +2,7 @@
 
 import rospy
 import socketio
+from sensor_msgs.msg import NavSatFix
 
 
 class PortalConnection():
@@ -21,7 +22,7 @@ class PortalConnection():
         self.secret = rospy.get_param("~secret")
 
         # Define subscribers
-        # TODO(angus)
+        rospy.Subscriber("/gps/filtered", NavSatFix, self.gps_callback)
 
         # Use timer to periodically publish state of this class
         rospy.Timer(rospy.Duration(1 / self.frequency), self.emit_state)
@@ -57,6 +58,9 @@ class PortalConnection():
                 self.sio.emit("robot_detail", self.state)
             except socketio.exceptions.BadNamespaceError:
                 rospy.logwarn("Failed to send data to Portal...will retry in a bit")
+
+    def gps_callback(self, msg):
+        self.state["gps"] = {"lat": msg.latitude, "lng": msg.longitude}
 
 
 if __name__ == '__main__':
