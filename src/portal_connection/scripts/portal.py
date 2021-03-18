@@ -62,6 +62,7 @@ class PortalConnection():
     def gps_callback(self, msg):
         self.state["gps"] = {"lat": msg.latitude, "lng": msg.longitude}
 
+
 if __name__ == '__main__':
     try:
         _ = PortalConnection()
