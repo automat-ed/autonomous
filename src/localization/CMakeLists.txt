@@ -6,6 +6,7 @@ project(localization)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
     rospy
+    robot_localization
 )
 
 ###################################
@@ -20,7 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES localization
-  CATKIN_DEPENDS rospy
+  CATKIN_DEPENDS rospy robot_localization
 #  DEPENDS system_lib
 )
 
@@ -41,8 +42,10 @@ catkin_install_python(PROGRAMS
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  config/ekf_global.yaml
-  config/ekf_local.yaml
+  config/ground_truth/ekf_global.yaml
+  config/ground_truth/ekf_local.yaml
+  config/noise/ekf_global.yaml
+  config/noise/ekf_local.yaml
   config/navsat.yaml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

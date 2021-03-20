@@ -11,9 +11,10 @@
     </include>
 
     <!-- External Webots Controller -->
-    <arg name="keyboard" default="0"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use" />
     <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'>
         <param name="use_keyboard_control" value="$(eval arg('keyboard') == 0)" />
+        <param name="keyboard/lvel_scale" value="1" />
     </node>
 
     <!-- External Keyboard Controllers -->
