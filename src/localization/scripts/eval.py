@@ -52,17 +52,14 @@ class DataCollector():
         cur_time = rospy.Time.now()
 
         # Push current state to lists
-        #rospy.loginfo("GPS ground truth: ({}, {})".format(self.cur_gps_gt["x"], self.cur_gps_gt["y"]))
         self.gps_gt["x"].append(self.cur_gps_gt["x"])
         self.gps_gt["y"].append(self.cur_gps_gt["y"])
         self.gps_gt["time"].append(cur_time.to_sec())
 
-        #rospy.loginfo("GPS global: ({}, {})".format(self.cur_gps_gt["x"], self.cur_gps_gt["y"]))
         self.gps_global["x"].append(self.cur_gps_global["x"])
         self.gps_global["y"].append(self.cur_gps_global["y"])
         self.gps_global["time"].append(cur_time.to_sec())
 
-        #rospy.loginfo("GPS local: ({}, {})".format(self.cur_gps_gt["x"], self.cur_gps_gt["y"]))
         self.gps_local["x"].append(self.cur_gps_local["x"])
         self.gps_local["y"].append(self.cur_gps_local["y"])
         self.gps_local["time"].append(cur_time.to_sec())
@@ -109,7 +106,8 @@ class DataVisualizer():
         # Save path of all data files
         self.paths = file_paths
 
-        # Over-write provided options with defaults (see: https://www.stackabuse.com/how-to-merge-two-dictionaries-in-python/)
+        # Over-write provided options with defaults
+        # (see: https://www.stackabuse.com/how-to-merge-two-dictionaries-in-python/)
         self.options = {**{
             "names": ["ground_truth", "ekf_global", "ekf_local"],
             "save_path": str(os.path.join(os.environ["AUTOMATED_HOME"], "data"))
