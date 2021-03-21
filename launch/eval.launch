@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Localization -->
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
+    <arg name="rviz_config" default="" doc="Configuration file for RViz"/>
+    <arg name="ground_truth" default="false"/>
+    <include file="$(env AUTOMATED_HOME)/launch/localization.launch">
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
+        <arg name="rviz_config" value="$(arg rviz_config)"/>
+        <arg name="ground_truth" value="$(arg ground_truth)"/>
+    </include>
+
+    <!-- Evaluation -->
+    <node pkg="localization" type="data_collector.py" name="data_collector" output="screen">
+        <param name="frequency" value="1"/>
+        <param name="gps_gt" value="$(env AUTOMATED_HOME)/data/gps_gt.csv"/>
+        <param name="gps_global" value="$(env AUTOMATED_HOME)/data/gps_global.csv"/>
+        <param name="gps_local" value="$(env AUTOMATED_HOME)/data/gps_local.csv"/>
+    </node>
+</launch>
