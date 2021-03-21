@@ -68,8 +68,9 @@ class DataCollector():
 
     def run(self):
         rospy.spin()
+        self.save()
 
-    def __del__(self):
+    def save(self):
         # Save data sets to their configured files
         rospy.loginfo("Saving gps ground truth...")
         with open(self.gps_gt_path, 'w') as f:
