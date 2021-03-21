@@ -32,16 +32,19 @@
   <build_depend>rospy</build_depend>
   <build_depend>python3-numpy</build_depend>
   <build_depend>python3-pandas</build_depend>
+  <build_depend>python3-matplotlib</build_depend>
   <build_depend>robot_localization</build_depend>
 
   <exec_depend>rospy</exec_depend>
   <exec_depend>python3-numpy</exec_depend>
   <exec_depend>python3-pandas</exec_depend>
+  <exec_depend>python3-matplotlib</exec_depend>
   <exec_depend>robot_localization</exec_depend>
 
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>python3-numpy</build_export_depend>
   <build_export_depend>python3-pandas</build_export_depend>
+  <build_export_depend>python3-matplotlib</build_export_depend>
   <build_export_depend>robot_localization</build_export_depend>
 
 </package>
