@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+import os
+import re
 import rospy
 import pandas as pd
+from pathlib import Path
 from nav_msgs.msg import Odometry
 
 
@@ -71,27 +74,46 @@ class DataLogger():
     def save(self):
         # Save data sets to their configured files
         rospy.loginfo("Saving gps ground truth...")
-        with open(self.gps_gt_path, 'w') as f:
+        gt_path = self.generate_file_path(self.gps_gt_path)
+        with open(gt_path, 'w') as f:
             # Convert to Pandas DataFrame
             pd_gt = pd.DataFrame(self.gps_gt)
             pd_gt_csv = pd_gt.to_csv()
             f.write(pd_gt_csv)
 
         rospy.loginfo("Saving gps global...")
-        with open(self.gps_global_path, 'w') as f:
+        global_path = self.generate_file_path(self.gps_global_path)
+        with open(global_path, 'w') as f:
             # Convert to Pandas DataFrame
             pd_global = pd.DataFrame(self.gps_global)
             pd_global_csv = pd_global.to_csv()
             f.write(pd_global_csv)
 
         rospy.loginfo("Saving gps local...")
-        with open(self.gps_local_path, 'w') as f:
+        local_path = self.generate_file_path(self.gps_local_path)
+        with open(local_path, 'w') as f:
             # Convert to Pandas DataFrame
             pd_local = pd.DataFrame(self.gps_local)
             pd_local_csv = pd_local.to_csv()
             f.write(pd_local_csv)
 
         rospy.loginfo("Successfully saved all data.")
+
+    def generate_file_path(self, path):
+        file_path = Path(os.path.expanduser(path))
+        while file_path.is_file():
+            # Find number
+            p = re.compile(r'(?<=\()\d+(?=\).)')
+            reg_search = re.search(p, file_path.name)
+
+            if reg_search is None:
+                new_name = file_path.stem + "-(1)" + file_path.suffix
+            else:
+                new_name = re.sub(p, str(int(reg_search.group()) + 1), file_path.name)
+
+            file_path = Path(file_path.parent, new_name)
+
+        return file_path
 
 
 if __name__ == "__main__":
