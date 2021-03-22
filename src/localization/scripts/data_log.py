@@ -6,6 +6,7 @@ import rospy
 import pandas as pd
 from pathlib import Path
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import PoseStamped
 
 
 class DataLogger():
@@ -19,6 +20,9 @@ class DataLogger():
         self.gps_gt_path = rospy.get_param('~gps_gt', 'gps_gt.csv')
         self.gps_global_path = rospy.get_param('~gps_global', 'gps_local.csv')
         self.gps_local_path = rospy.get_param('~gps_local', 'gps_global.csv')
+
+        # Wait for move_base goal to be set
+        rospy.wait_for_message("/move_base_simple/goal", PoseStamped)
 
         # ROS Subscribers
         rospy.Subscriber('/ground_truth/pose', Odometry, self.gps_gt_callback)
@@ -113,7 +117,7 @@ class DataLogger():
 
             file_path = Path(file_path.parent, new_name)
 
-        return file_path
+        return str(file_path)
 
 
 if __name__ == "__main__":
