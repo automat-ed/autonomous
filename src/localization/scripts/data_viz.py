@@ -88,7 +88,6 @@ class DataVisualizer():
 
 
 if __name__ == "__main__":
-    print(sys.argv)
     if len(sys.argv) == 3:
         DataVisualizer(sys.argv[1], sys.argv[2])
     elif len(sys.argv) == 2:

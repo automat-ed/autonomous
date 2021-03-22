@@ -39,6 +39,8 @@ class DataLogger():
         self.gps_global = {"x": [], "y": [], "time": []}
         self.gps_local = {"x": [], "y": [], "time": []}
 
+        rospy.loginfo("Recording data...")
+
         # Timer to save data periodically (based on parameter)
         rospy.Timer(rospy.Duration.from_sec(1 / self.frequency), self.push_state)
 
