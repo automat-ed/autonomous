@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>state-machine</name>
+  <name>state_machine</name>
   <version>0.0.0</version>
-  <description>The state-machine package</description>
+  <description>The state_machine package</description>
   <license>MIT</license>
   <maintainer email="siliconlad@protonmail.com">Angus Stewart</maintainer>
   <author email="siliconlad@protonmail.com">Angus Stewart</author>
