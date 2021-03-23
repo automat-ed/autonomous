@@ -1,7 +1,0 @@
-image:  world.png
-resolution: 0.010869565
-origin: [-2.5, -2.5, 0]
-occupied_thresh: 0.5
-free_thresh: 0.1
-negate: 1
-mode: trinary
