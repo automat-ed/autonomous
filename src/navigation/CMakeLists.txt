@@ -42,10 +42,10 @@ catkin_package(
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  config/ground_truth/base_local_planner_params.yaml
-  config/ground_truth/costmap_common_params.yaml
-  config/noise/global_costmap_params.yaml
-  config/noise/local_costmap_params.yaml
+  config/base_local_planner_params.yaml
+  config/costmap_common_params.yaml
+  config/global_costmap_params.yaml
+  config/local_costmap_params.yaml
   config/square.yaml
   assets/square.png
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
