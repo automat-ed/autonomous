@@ -11,7 +11,7 @@
     </include>
 
     <!-- RViz -->
-    <arg name="rviz_config" default=""/>
+    <arg name="rviz_config" default="" doc="Configuration file for RViz"/>
     <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
 
     <!-- Ground Truth Localization -->
