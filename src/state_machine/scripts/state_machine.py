@@ -115,6 +115,10 @@ class StateMachine:
                           .format(self.robot_state, RobotState.READY))
             self.robot_state = RobotState.READY
 
+        if self.robot_state != RobotState.DRIVING:
+            # TODO(angus): stop the robot
+            pass
+
     def waiting_state(self):
         # Transition if CONNECTED to Portal
         if self.network_state == NetworkStatus.CONNECTED:
