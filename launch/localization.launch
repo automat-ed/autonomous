@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <!-- Simulation -->
-    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
-    <arg name="world" default="square" doc="The name of the webots world to launch"/>
-    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
-    <include file="$(env AUTOMATED_HOME)/launch/simulation.launch">
-        <arg name="no-gui" value="$(arg no-gui)"/>
-        <arg name="world" value="$(arg world)"/>
-        <arg name="keyboard" value="$(arg keyboard)"/>
-    </include>
-
-    <!-- RViz -->
-    <arg name="rviz_config" default=""/>
-    <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
-
     <!-- Ground Truth Localization -->
     <arg name="ground_truth" default="false"/>
     <group if="$(eval arg('ground_truth'))">
@@ -40,7 +26,7 @@
         </node>
     </group>
 
-    <!-- Localiation (with noise) -->
+    <!-- Localization (with noise) -->
     <group unless="$(eval arg('ground_truth'))">
         <!-- Convert GPS data into Odometry data -->
         <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
