@@ -5,7 +5,8 @@ project(localization)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  robot_localization
+    rospy
+    robot_localization
 )
 
 ###################################
@@ -20,7 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES localization
-   CATKIN_DEPENDS robot_localization
+  CATKIN_DEPENDS rospy robot_localization
 #  DEPENDS system_lib
 )
 
@@ -31,12 +32,13 @@ catkin_package(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# catkin_install_python(PROGRAMS
-#   scripts/evaluation.py
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+# Mark executable scripts (Python etc.) for installation
+# in contrast to setup.py, you can choose the destination
+catkin_install_python(PROGRAMS
+  scripts/data_log.py
+  scripts/data_viz.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
