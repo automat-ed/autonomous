@@ -21,8 +21,13 @@ class StateMachine:
         # ROS Parameters
         self.frequency = rospy.get_param("~frequency", 50)
         self.launch_file = rospy.get_param("~launch_file")
+        self.is_ground_truth = rospy.get_param("~ground_truth", False)
+        self.map_file = rospy.get_param("~map_file", "square.yaml")
+        self.need_portal = rospy.get_param("~portal_connection", True)
 
-        rospy.loginfo(self.launch_file)
+        # If true, assume portal_connection is not running
+        if not self.need_portal:
+            self.network_state = NetworkStatus.CONNECTED
 
         # Define subscribers
         rospy.Subscriber("/state_machine/connection", NetworkStatusStamped, self.network_callback)
@@ -44,11 +49,11 @@ class StateMachine:
 
         # Transition if CONNECTED to Portal
         if self.network_state == NetworkStatus.CONNECTED:
-            rospy.loginfo("state_machine :: Connected to Portal!")
             rospy.loginfo("state_machine :: Robot state change: {} --> {}"
                           .format(self.robot_state, RobotState.READY))
             self.launch_nodes()
             self.robot_state = RobotState.READY
+
         else:
             # Limit log message so it doesn't log every time
             rospy.loginfo_once("state_machine :: Waiting for Portal connection...")
@@ -195,7 +200,8 @@ class StateMachine:
             self.reset = True
 
     def launch_nodes(self):
-        self.launch = subprocess.Popen(["roslaunch", self.launch_file, "--no-summary"])
+        self.launch = subprocess.Popen(["roslaunch", self.launch_file, "--no-summary",
+                                        "ground_truth:=" + str(self.is_ground_truth), "map_file:=" + self.map_file])
 
     def kill_nodes(self):
         if self.launch is not None:
