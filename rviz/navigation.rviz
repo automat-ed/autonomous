@@ -75,7 +75,7 @@ Visualization Manager:
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
       Enabled: true
       Name: Local Costmap
@@ -204,9 +204,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 204; 0; 0
-      Max Intensity: 0.5182158350944519
+      Max Intensity: -999999
       Min Color: 115; 210; 22
-      Min Intensity: -0.0020169380586594343
+      Min Intensity: 999999
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
