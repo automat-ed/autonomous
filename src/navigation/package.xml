@@ -15,10 +15,6 @@
   <build_export_depend>move_base</build_export_depend>
   <exec_depend>move_base</exec_depend>
 
-  <build_depend>robot_localization</build_depend>
-  <build_export_depend>robot_localization</build_export_depend>
-  <exec_depend>robot_localization</exec_depend>
-
   <build_depend>map_server</build_depend>
   <build_export_depend>map_server</build_export_depend>
   <exec_depend>map_server</exec_depend>
