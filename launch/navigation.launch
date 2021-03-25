@@ -6,8 +6,14 @@
 
     <!-- Simulation & Controller & Localization-->
     <arg name="ground_truth" default="false"/>
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
     <include file="$(env AUTOMATED_HOME)/launch/localization.launch">
         <arg name="ground_truth" value="$(arg ground_truth)"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
     </include>
 
 
