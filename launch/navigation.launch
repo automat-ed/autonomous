@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- RViz -->
+    <arg name="rviz_config" default=""/>
+    <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
+
+    <!-- Simulation & Controller & Localization-->
+    <arg name="ground_truth" default="false"/>
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch"/>
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
+    <include file="$(env AUTOMATED_HOME)/launch/localization.launch">
+        <arg name="ground_truth" value="$(arg ground_truth)"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
+    </include>
+
+
+    <!-- Map Server-->
+    <arg name="map_file" default="square.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find navigation)/config/$(arg map_file)" />
+
+     <!-- Move base -->
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+        <rosparam file="$(find navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+        <rosparam file="$(find navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find navigation)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find navigation)/config/global_costmap_params.yaml" command="load" /> 
+        <rosparam file="$(find navigation)/config/base_local_planner_params.yaml" command="load" />
+    </node>
+
+</launch>
