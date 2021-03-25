@@ -18,8 +18,8 @@
 
 
     <!-- Map Server-->
-    <arg name="map_file" default="$(find navigation)/config/square.yaml"/>
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+    <arg name="map_file" default="square.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find navigation)/config/$(arg map_file)" />
 
      <!-- Move base -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
