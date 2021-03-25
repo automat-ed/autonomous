@@ -1,6 +1,6 @@
 image: ../assets/square.png
 resolution: 0.098039216
-origin: [-48, -25.3, 0]
+origin: [-48, -25.8, 0]
 occupied_thresh: 0.2
 free_thresh: 0.1
 negate: 1
