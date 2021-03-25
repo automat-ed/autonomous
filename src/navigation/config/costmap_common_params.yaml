@@ -13,3 +13,4 @@ laser_scan_sensor: {sensor_frame: lidar,
                     topic: /lidar/ground_truth, 
                     marking: true, 
                     clearing: true}
+                    
