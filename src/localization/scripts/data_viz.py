@@ -36,9 +36,9 @@ class DataVisualizer():
 
         # Plot data
         fig, axes = plt.subplots()
-        self.gps_gt.plot(x="x", y="y", ax=axes, xlabel="x", ylabel="y", label=self.options["names"][0])
-        self.gps_global.plot(x="x", y="y", ax=axes, xlabel="x", ylabel="y", label=self.options["names"][1])
-        self.gps_local.plot(x="x", y="y", ax=axes, xlabel="x", ylabel="y", label=self.options["names"][2])
+        self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0])
+        self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1])
+        self.gps_local.plot(x="x", y="y", ax=axes, label=self.options["names"][2])
 
         # Save figure
         fig_path = self.generate_file_path(os.path.join(self.options["save_path"], "fig.png"))
