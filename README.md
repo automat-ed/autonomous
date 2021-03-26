@@ -37,7 +37,7 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     echo "export AUTOMATED_HOME=$HOME/autonomous" >> ~/.zshrc
     ```
-5. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots (typicall `/usr/loca/webots` on Linux):
+5. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots (typically `/usr/local/webots` on Linux):
     ```bash
     echo "export WEBOTS_HOME=/usr/local/webots" >> ~/.bashrc
     ```
