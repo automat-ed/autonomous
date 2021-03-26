@@ -47,7 +47,7 @@ The following instructions details how to install the pacakge and its dependenci
     ```
 6. Add to your `.bashrc` file (or `.zshrc` if you use zsh):
     ```bash
-    export LD_LIBRARY_PATH=${WEBOTS_HOME}/lib/controller:$PATH
+    export LD_LIBRARY_PATH="${WEBOTS_HOME}/lib/controller:$PATH"
     ```
 7. Source workspace
     ```bash
