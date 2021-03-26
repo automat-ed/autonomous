@@ -37,7 +37,7 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     echo "export AUTOMATED_HOME=$HOME/autonomous" >> ~/.zshrc
     ```
-5. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots:
+5. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots (typicall `/usr/loca/webots` on Linux):
     ```bash
     echo "export WEBOTS_HOME=/usr/local/webots" >> ~/.bashrc
     ```
@@ -45,13 +45,9 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     echo "export WEBOTS_HOME=/usr/local/webots" >> ~/.zshrc
     ```
-6. Add Webots controller to `LD_LIBRARY_PATH`:
+6. Add to your `.bashrc` file (or `.zshrc` if you use zsh):
     ```bash
-    echo "export LD_LIBRARY_PATH=${WEBOTS_HOME}/lib/controller:$PATH" >> ~/.bashrc
-    ```
-    Or if you are using zsh:
-    ```bash
-    echo "export LD_LIBRARY_PATH=${WEBOTS_HOME}/lib/controller:$PATH" >> ~/.zshrc
+    export LD_LIBRARY_PATH=${WEBOTS_HOME}/lib/controller:$PATH
     ```
 7. Source workspace
     ```bash
