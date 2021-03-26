@@ -79,3 +79,17 @@ You can pass in multiple commandline statements to `full.launch`
 * `ground_truth`: A configuration parameter that gets passed to the launch file launched by the state machine. When combined with `navigation.launch`, this enables to use of ground truth localization.
 * `map_file`: A configuration parameter taht gets passed to the launch file launched by the state machine. When combined with `navigation.launch`, it determines the specific config file to pass to `map_server` from within the `src/navigation/config` directory.
 * `eval`: Whether or not to launch the `data_log.py` script which will log the ground truth, `ekf_local` and `ekf_global` position outputs once a message to `move_base_simple/goal` has been published.
+
+## Directory Structure
+This section tries to explain the general structure of the repository. For more detailed information, please take a look at the code.
+* `.github/workflows`: contains the Github Actions config file for the [Continuous Integration pipeline](https://github.com/automat-ed/autonomous/actions/workflows/ci.yaml).
+* `launch`: Contains the launch files for launching the entire stack (`full.launch`), just the simulation (`simulation.launch`) and just the autonomous software (`navigation.launch`). By default, `navigation.launch` is launched by the state machine.
+* `rviz`: Contains various RViz config files
+* `src`
+    * `automated_msgs`: Custom messages used to describe the state of the robot and its connection to the [Portal](https://github.com/automat-ed/portal).
+    * `controllers`: Contains two different implementations (in C++ and Python) of keyboard controllers to enable moving the robot in simulation with the arrow keys.
+    * `localization`: Contains the config files for the [`robot_localization`](https://docs.ros.org/en/noetic/api/robot_localization/html/index.html) nodes that we use. It also contains a script to save position estimates from simulation (`data_log.py`) from [`GroundTruthPose`](https://github.com/automat-ed/simulation/blob/update-readme/lib/utils/src/GroundTruthPose.cpp), `ekf_global` and `ekf_local` and saves this in the `data` directory in the workspace. The `data_viz.py` takes the data saved in the `data` directory and returns a plot of the data.
+    * `navigation`: Contains the config files for all the nodes associated with [`move_base`](https://wiki.ros.org/move_base).
+    * `portal_connection`: Contains the node responsible for interfacing with the [Portal](https://github.com/automat-ed/portal).
+    * `simulation`: Links to our [`simulation`](https://github.com/automat-ed/simulation) repository.
+    * `state_machine`: Responsible for managing the state of the robot and launching the navigation stack.
