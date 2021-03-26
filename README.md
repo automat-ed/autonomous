@@ -25,11 +25,7 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     rosdep install --from-paths src --ignore-src -y
     ```
-3. Build workspace (catkin_make will also work if you don't have [catkin_tools](https://catkin-tools.readthedocs.io/) installed)
-    ```bash
-    catkin build
-    ```
-4. Set `AUTOMATED_HOME` environment variable to the absolute path to the workspace. For example:
+3. Set `AUTOMATED_HOME` environment variable to the absolute path to the workspace. For example:
     ```bash
     echo "export AUTOMATED_HOME=$HOME/autonomous" >> ~/.bashrc
     ```
@@ -37,7 +33,7 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     echo "export AUTOMATED_HOME=$HOME/autonomous" >> ~/.zshrc
     ```
-5. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots (typically `/usr/local/webots` on Linux):
+4. Set `WEBOTS_HOME` environment variable to the `webots` directory obtained from installing Webots (typically `/usr/local/webots` on Linux):
     ```bash
     echo "export WEBOTS_HOME=/usr/local/webots" >> ~/.bashrc
     ```
@@ -45,9 +41,13 @@ The following instructions details how to install the pacakge and its dependenci
     ```bash
     echo "export WEBOTS_HOME=/usr/local/webots" >> ~/.zshrc
     ```
-6. Add to your `.bashrc` file (or `.zshrc` if you use zsh):
+5. Add to your `.bashrc` file (or `.zshrc` if you use zsh):
     ```bash
     export LD_LIBRARY_PATH="${WEBOTS_HOME}/lib/controller:$PATH"
+    ```
+6. Build workspace (catkin_make will also work if you don't have [catkin_tools](https://catkin-tools.readthedocs.io/) installed)
+    ```bash
+    catkin build
     ```
 7. Source workspace
     ```bash
