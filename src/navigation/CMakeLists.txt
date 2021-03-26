@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(localization)
+project(navigation)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-    rospy
-    robot_localization
+  move_base
+  map_server
 )
 
 ###################################
@@ -21,7 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES localization
-  CATKIN_DEPENDS rospy robot_localization
+   CATKIN_DEPENDS move_base map_server
 #  DEPENDS system_lib
 )
 
@@ -32,20 +32,13 @@ catkin_package(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-# Mark executable scripts (Python etc.) for installation
-# in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  scripts/data_log.py
-  scripts/data_viz.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  config/ground_truth/ekf_global.yaml
-  config/ground_truth/ekf_local.yaml
-  config/noise/ekf_global.yaml
-  config/noise/ekf_local.yaml
-  config/navsat.yaml
+  config/base_local_planner_params.yaml
+  config/costmap_common_params.yaml
+  config/global_costmap_params.yaml
+  config/local_costmap_params.yaml
+  config/square.yaml
+  assets/square.png
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
