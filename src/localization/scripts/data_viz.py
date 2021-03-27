@@ -59,7 +59,12 @@ class DataVisualizer():
         plt.legend(bbox_to_anchor=(1, 1), loc='upper left')
 
         # Overlay image of map
-        img = plt.imread("./../src/navigation/assets/square.png")
+        # Square
+        # img = plt.imread("./../src/navigation/assets/square.png")
+        # axes.imshow(img, origin="lower", extent=[-49, 2, -25, 24], alpha=0.8)
+
+        # Curved Path
+        img = plt.imread("./../src/navigation/assets/curved_path.png")
         axes.imshow(img, origin="lower", extent=[-49, 2, -25, 24], alpha=0.8)
 
         # Display Average Error
@@ -73,10 +78,10 @@ class DataVisualizer():
         fig_path = self.generate_file_path(os.path.join(self.options["save_path"], "fig.png"))
         plt.savefig(fig_path)
 
+        print("Saved figure to: ", fig_path)
+
         # Error over Time Plot
         self.plot_error_over_time()
-
-        print("Saved figure to: ", fig_path)
 
     def calculate_average_frame(self, file_paths):
         # Get cumulative x and y values
@@ -153,10 +158,10 @@ class DataVisualizer():
         time -= t0
         # EKF Local error
         fig, ax = plt.subplots()
-        ax.plot(time, self.errors_local, label="ekf_local error")
+        ax.plot(time, self.errors_local, label="ekf local error")
 
         # EKF Global error
-        ax.plot(time, self.errors_global, label="ekf_global error")
+        ax.plot(time, self.errors_global, label="ekf global error")
 
         # Info
         plt.title("Localization error over time", fontweight="bold")
