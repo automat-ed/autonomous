@@ -38,21 +38,36 @@ class DataVisualizer():
         # Over-write provided options with defaults
         # (see: https://www.stackabuse.com/how-to-merge-two-dictionaries-in-python/)
         self.options = {**{
-            "names": ["ground_truth", "ekf_global", "ekf_local"],
+            "names": ["ground truth", "ekf global", "ekf local"],
             "save_path": str(os.path.join(os.environ["AUTOMATED_HOME"], "data"))
         }, **options}
 
         # Plot data
         fig, axes = plt.subplots()
-        img = plt.imread("square.PNG")
-        axes.imshow(img,origin = 'lower', extent=[-50,0,-25,25])
-        self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0], color='black')
-        self.gps_local.plot(x="x", y="y", ax=axes, label=self.options["names"][2])
-        self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1])
 
-        # Plot Error
-        plt.gcf().text(0.12, 0.9, "ekf_local error: {}".format(self.error_gt_local), fontsize=11, fontweight="bold")
-        plt.gcf().text(0.62, 0.9,"ekf_global error: {}".format(self.error_gt_global), fontsize=11, fontweight="bold")
+        # Adjust plot size
+        fig.subplots_adjust(bottom=0.27)
+        
+        self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0], color='green', linewidth=2)
+        self.gps_local.plot(x="x", y="y", ax=axes, label=self.options["names"][2], linewidth=2)
+        self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1], linewidth=2)
+
+        # Info
+        plt.title("Robot Position Estimation", fontweight="bold")
+        plt.xlabel("x (m)")
+        plt.ylabel("y (m)")
+        plt.legend(bbox_to_anchor=(1, 1), loc='upper left')
+
+        # Overlay image of map
+        img = plt.imread("./../src/navigation/assets/square.png")
+        axes.imshow(img, origin="lower", extent=[-49, 2, -25, 24], alpha=0.8)
+
+        # Display Average Error
+        plt.gcf().text(0.44, 0.14, "Average Error", fontweight="bold", fontsize=9)
+        plt.gcf().text(0.335, 0.08, 
+                      "ekf local: {} m    ekf global: {} m".format(self.error_gt_local, self.error_gt_global),
+                       fontsize=8, 
+                       bbox=dict(facecolor='none', edgecolor='black', pad=10.0))
 
         # Save figure
         fig_path = self.generate_file_path(os.path.join(self.options["save_path"], "fig.png"))
@@ -60,7 +75,6 @@ class DataVisualizer():
 
         # Error over Time Plot
         self.plot_error_over_time()
-
 
         print("Saved figure to: ", fig_path)
 
