@@ -44,6 +44,8 @@ class DataVisualizer():
 
         # Plot data
         fig, axes = plt.subplots()
+        img = plt.imread("square.PNG")
+        axes.imshow(img,origin = 'lower', extent=[-50,0,-25,25])
         self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0], color='black')
         self.gps_local.plot(x="x", y="y", ax=axes, label=self.options["names"][2])
         self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1])
