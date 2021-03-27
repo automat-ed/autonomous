@@ -28,6 +28,10 @@ class DataVisualizer():
         self.gps_global = self.calculate_average_frame(self.gps_global_files)
         self.gps_local = self.calculate_average_frame(self.gps_local_files)
 
+        # Store individual errors to plot error over time
+        self.errors_local  = []
+        self.errors_global = []
+
         # Calculate average error between gt and ekf_local / ekf_global
         self.error_gt_local, self.error_gt_global = self.calculate_average_error()
 
@@ -40,9 +44,9 @@ class DataVisualizer():
 
         # Plot data
         fig, axes = plt.subplots()
-        self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0])
-        self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1])
+        self.gps_gt.plot(x="x", y="y", ax=axes, label=self.options["names"][0], color='black')
         self.gps_local.plot(x="x", y="y", ax=axes, label=self.options["names"][2])
+        self.gps_global.plot(x="x", y="y", ax=axes, label=self.options["names"][1])
 
         # Plot Error
         plt.gcf().text(0.12, 0.9, "ekf_local error: {}".format(self.error_gt_local), fontsize=11, fontweight="bold")
@@ -51,6 +55,10 @@ class DataVisualizer():
         # Save figure
         fig_path = self.generate_file_path(os.path.join(self.options["save_path"], "fig.png"))
         plt.savefig(fig_path)
+
+        # Error over Time Plot
+        self.plot_error_over_time()
+
 
         print("Saved figure to: ", fig_path)
 
@@ -103,19 +111,45 @@ class DataVisualizer():
         # Dataframes have same number of observations, pick any one to iterate with index
         for index in range(self.gps_gt.shape[0]):
             point_gt = self.gps_gt.iloc[index, 1:3]
+
             point_local = self.gps_local.iloc[index, 1:3]
-            
             error_local  = np.linalg.norm(point_local-point_gt)
             error_gt_local += error_local
+            # Store individual error for plot of error over time
+            self.errors_local.append(error_local)
             
             point_global = self.gps_global.iloc[index, 1:3]
             error_global  = np.linalg.norm(point_global-point_gt)
             error_gt_global += error_global
+            # Store individual error for plot of error over time
+            self.errors_global.append(error_global)
+
 
         error_gt_local /= self.gps_gt.shape[0]
         error_gt_global /= self.gps_gt.shape[0]
 
         return round(error_gt_local, 3), round(error_gt_global, 3)
+
+    def plot_error_over_time(self, ):
+        # Subtract value of first timestep to begin at 0 
+        t0 = self.gps_gt["time"][0]
+        time = self.gps_gt["time"]
+        time -= t0
+        # EKF Local error
+        fig, ax = plt.subplots()
+        ax.plot(time, self.errors_local, label="ekf_local error")
+
+        # EKF Global error
+        ax.plot(time, self.errors_global, label="ekf_global error")
+
+        # Info
+        plt.title("Localization error over time", fontweight="bold")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Error (m)")
+        plt.legend()
+
+        # Save plot
+        plt.savefig("Error_time")
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
