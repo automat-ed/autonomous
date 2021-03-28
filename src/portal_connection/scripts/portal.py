@@ -5,6 +5,7 @@ import json
 import socketio
 from sensor_msgs.msg import NavSatFix
 from automated_msgs.msg import NetworkStatus, NetworkStatusStamped, RobotState, RobotStateStamped
+from std_msgs.msg import Bool
 
 
 class PortalConnection():
@@ -43,6 +44,8 @@ class PortalConnection():
 
         # Define publishers
         self.network_state_pub = rospy.Publisher("/state_machine/connection", NetworkStatusStamped, queue_size=1)
+        self.start_pub = rospy.Publisher("/state_machine/start", Bool, queue_size=1)
+        self.emergency_pub = rospy.Publisher("/state_machine/emergency", Bool, queue_size=1)
 
         # Use timer to periodically publish state of this class
         rospy.Timer(rospy.Duration(1 / self.frequency), self.emit_state)
@@ -70,6 +73,16 @@ class PortalConnection():
             rospy.logwarn("portal_connection :: Connection to Portal broken.")
             self.publish_network_status(NetworkStatus.DISCONNECTED)
             self.state["connected"] = False
+
+        @self.sio.event
+        def start(data):
+            rospy.loginfo("Received start signal")
+            self.start_pub.publish(True)
+
+        @self.sio.event
+        def emergency(data):
+            rospy.loginfo("Received stop signal")
+            self.emergency_pub.publish(True)
 
         # Connect to Portal
         while not self.state["connected"] and not rospy.is_shutdown():
