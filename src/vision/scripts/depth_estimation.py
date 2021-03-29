@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import rospy
-import cv2
 import numpy as np
 from std_msgs.msg import Bool, Float64
 from sensor_msgs.msg import Image
