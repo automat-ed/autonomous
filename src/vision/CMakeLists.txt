@@ -7,6 +7,8 @@ project(vision)
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   rospy
+  std_msgs
+  sensor_msgs
 )
 
 ###################################
