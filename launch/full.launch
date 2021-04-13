@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Launches the entire software stack. -->
+<launch>
+    <!-- Args -->
+    <arg name="mode" default="realtime" doc="The state of Webots once launched"/>
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch" />
+    <arg name="keyboard" default="" doc="The type of keyboard controller to use" />
+    <arg name="rviz_config" default=""/>
+    <arg name="portal" default="false"/>
+    <arg name="launch_file" default="$(env AUTOMATED_HOME)/launch/navigation.launch"/>
+    <arg name="ground_truth" default="false"/>
+    <arg name="map_file" default="square.yaml"/>
+    <arg name="eval" default="false"/>
+
+    <!-- Simulation -->
+    <include file="$(env AUTOMATED_HOME)/launch/simulation.launch">
+        <arg name="mode" value="$(arg mode)"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
+    </include>
+
+    <!-- RViz -->
+    <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
+
+    <!-- State Machine -->
+    <node pkg="state_machine" type="state_machine.py" name="state_machine" output="screen">
+        <param name="launch_file" value="$(arg launch_file)"/>
+        <param name="ground_truth" value="$(arg ground_truth)"/>
+        <param name="map_file" value="$(arg map_file)"/>
+        <param name="portal_connection" value="$(arg portal)"/>
+    </node>
+
+    <!-- Portal Connection -->
+    <node if="$(eval arg('portal'))" pkg="portal_connection" type="portal.py" name="portal_connection" output="screen">
+        <param name="secret" value="$(env PORTAL_SECRET)"/>
+    </node>
+
+    <!-- Evaluation -->
+    <node if="$(eval arg('eval'))" pkg="localization" type="data_log.py" name="data_log" output="screen">
+        <param name="frequency" value="1"/>
+        <param name="gps_gt" value="$(env AUTOMATED_HOME)/data/gps_gt.csv"/>
+        <param name="gps_global" value="$(env AUTOMATED_HOME)/data/gps_global.csv"/>
+        <param name="gps_local" value="$(env AUTOMATED_HOME)/data/gps_local.csv"/>
+    </node>
+
+</launch>

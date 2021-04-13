@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>state_machine</name>
+  <version>0.0.0</version>
+  <description>The state_machine package</description>
+  <license>MIT</license>
+  <maintainer email="siliconlad@protonmail.com">Angus Stewart</maintainer>
+  <author email="siliconlad@protonmail.com">Angus Stewart</author>
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+
+  <exec_depend>rospy</exec_depend>
+
+  <build_export_depend>rospy</build_export_depend>
+
+</package>
