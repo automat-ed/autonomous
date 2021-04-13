@@ -1,27 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Launches all the localization, planning and control nodes. -->
 <launch>
-    <!-- RViz -->
-    <arg name="rviz_config" default=""/>
-    <node unless="$(eval arg('rviz_config') == '')" pkg="rviz" type="rviz" name="rviz" args="-d $(env AUTOMATED_HOME)/rviz/$(arg rviz_config).rviz"/>
-
-    <!-- Simulation & Controller & Localization-->
+    <!-- Args-->
     <arg name="ground_truth" default="false"/>
-    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
-    <arg name="world" default="square" doc="The name of the webots world to launch"/>
-    <arg name="keyboard" default="0" doc="The type of keyboard controller to use"/>
-    <include file="$(env AUTOMATED_HOME)/launch/localization.launch">
-        <arg name="ground_truth" value="$(arg ground_truth)"/>
-        <arg name="no-gui" value="$(arg no-gui)"/>
-        <arg name="world" value="$(arg world)"/>
-        <arg name="keyboard" value="$(arg keyboard)"/>
-    </include>
+    <arg name="map_file" default="square.yaml"/>
 
+    <!--##############-->
+    <!-- Localization -->
+    <!--##############-->
+    
+    <!-- Ground Truth Localization -->
+    <group if="$(eval arg('ground_truth'))">
+        <!-- Convert GPS data into Odometry data -->
+        <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
+            <rosparam command="load" file="$(find localization)/config/navsat.yaml"/>
+
+            <remap from="/imu/data" to="/imu/ground_truth"/>
+            <remap from="/gps/fix" to="/gps/ground_truth/coordinates"/>
+            <!-- Should be from global ekf estimate for some reason -->
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+
+        <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" output="screen">
+            <rosparam command="load" file="$(find localization)/config/ground_truth/ekf_local.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
+        </node>
+
+        <!-- EKF Global node, which incorporates discrete GPS data -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" output="screen">
+            <rosparam command="load" file="$(find localization)/config/ground_truth/ekf_global.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+    </group>
+
+    <!-- Localization (with noise) -->
+    <group unless="$(eval arg('ground_truth'))">
+        <!-- Convert GPS data into Odometry data -->
+        <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" output="screen">
+            <rosparam command="load" file="$(find localization)/config/navsat.yaml"/>
+
+            <remap from="/imu/data" to="/imu/data"/>
+            <remap from="/gps/fix" to="/gps/coordinates"/>
+            <!-- Should be from global ekf estimate for some reason -->
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+
+        <!-- EKF Local node, which fuses only contnuous data, i.e. no GPS -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" output="screen">
+            <rosparam command="load" file="$(find localization)/config/noise/ekf_local.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
+        </node>
+
+        <!-- EKF Global node, which incorporates discrete GPS data -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" output="screen">
+            <rosparam command="load" file="$(find localization)/config/noise/ekf_global.yaml"/>
+            <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        </node>
+    </group>
+    
+    <!--###################-->
+    <!-- Planning & Control -->
+    <!--###################-->
 
     <!-- Map Server-->
-    <arg name="map_file" default="square.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(find navigation)/config/$(arg map_file)" />
 
-     <!-- Move base -->
+    <!-- Move base -->
     <node pkg="move_base" type="move_base" name="move_base" output="screen">
         <rosparam file="$(find navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
         <rosparam file="$(find navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
