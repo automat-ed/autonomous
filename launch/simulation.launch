@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Launches Webots with the external controller
+    (and potentially a separate keyboard controller node) 
+-->
 <launch>
-    <!-- Start Webots -->
+    <!-- Args -->
+    <arg name="mode" default="pause" doc="The state of Webots once launched"/>
     <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
     <arg name="world" default="square" doc="The name of the webots world to launch" />
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use" />
+
+    <!-- Start Webots -->
     <include file="$(find simulation)/launch/webots.launch">
-        <arg name="mode" value="pause"/>
+        <arg name="mode" value="$(arg mode)"/>
         <arg name="no-gui" value="$(arg no-gui)"/>
         <!-- modify with path to world-->
         <arg name="world" value="$(find simulation)/worlds/$(arg world).wbt"/>
     </include>
 
     <!-- External Webots Controller -->
-    <arg name="keyboard" default="0" doc="The type of keyboard controller to use" />
     <node name='sim_controller' pkg='simulation' type='full_controller' output='screen' respawn='true'>
         <param name="use_keyboard_control" value="$(eval arg('keyboard') == 0)" />
         <param name="keyboard/lvel_scale" value="1" />
