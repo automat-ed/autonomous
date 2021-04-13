@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Simulation -->
+    <arg name="mode" default="pause"/>
+    <arg name="no-gui" default="false" doc="Start Webots with minimal GUI"/>
+    <arg name="world" default="square" doc="The name of the webots world to launch" />
+    <arg name="keyboard" default="0" doc="The type of keyboard controller to use" />
+    <include file="$(env AUTOMATED_HOME)/launch/simulation.launch">
+        <arg name="mode" value="$(arg mode)"/>
+        <arg name="no-gui" value="$(arg no-gui)"/>
+        <arg name="world" value="$(arg world)"/>
+        <arg name="keyboard" value="$(arg keyboard)"/>
+    </include>
+
+    <!-- Launch darknet_ros(YOLOv3)-->
+    <arg name="image" default="/multi_sense/rgb/data" />
+    <arg name="ros_param_file" default="$(find vision)/config/darknet_ros.yaml"/>
+    <arg name="network_param_file" default="$(find darknet_ros)/config/yolov3.yaml"/>
+    <include file="$(find darknet_ros)/launch/darknet_ros.launch">
+        <arg name="image" value="$(arg image)" />
+        <arg name="ros_param_file" value="$(arg ros_param_file)"/>
+        <arg name="network_param_file" value="$(arg network_param_file)"/>
+    </include>
+
+    <!-- Depth Estimation -->
+    <node pkg="vision" type="depth_estimation.py" name="depth_estimation" output="screen"/>
+</launch>
